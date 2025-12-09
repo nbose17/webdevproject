@@ -2,6 +2,7 @@
 
 import ProtectedRoute from '@/components/shared/ProtectedRoute';
 import Sidebar from '@/components/dashboard/Sidebar';
+import TopBar from '@/components/dashboard/TopBar';
 
 export default function DashboardLayout({
   children,
@@ -12,7 +13,10 @@ export default function DashboardLayout({
     <ProtectedRoute>
       <div className="dashboard-container">
         <Sidebar />
-        <main className="dashboard-main">{children}</main>
+        <div className="dashboard-content-wrapper">
+          <TopBar />
+          <main className="dashboard-main">{children}</main>
+        </div>
       </div>
     </ProtectedRoute>
   );
