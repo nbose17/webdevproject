@@ -48,7 +48,7 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      <div className="settings-tabs-container">
+      {/* <div className="settings-tabs-container">
         <nav className="settings-tabs">
           {tabs.map((tab) => {
             const IconComponent = tab.icon;
@@ -91,7 +91,7 @@ export default function SettingsPage() {
             </Button>
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }

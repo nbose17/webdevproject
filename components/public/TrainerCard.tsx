@@ -21,10 +21,21 @@ export default function TrainerCard({ trainer }: TrainerCardProps) {
       </div>
       <div className="trainer-card-info">
         <h3 className="trainer-card-name">{trainer.name}</h3>
+        <p className="trainer-card-experience">{trainer.experience}</p>
+        {trainer.specialization && (
+          <p className="trainer-card-specialization">{trainer.specialization}</p>
+        )}
+        {trainer.certification && (
+          <p className="trainer-card-certification">{trainer.certification}</p>
+        )}
+        {trainer.bio && (
+          <p className="trainer-card-bio">{trainer.bio}</p>
+        )}
       </div>
     </div>
   );
 }
+
 
 
 

@@ -7,6 +7,9 @@ export interface Gym {
   image: string;
   featured: boolean;
   description?: string;
+  address?: string;
+  phone?: string;
+  email?: string;
 }
 
 export interface Plan {
@@ -14,6 +17,8 @@ export interface Plan {
   name: string;
   duration: string;
   price: number;
+  description?: string;
+  features?: string[];
 }
 
 export interface Class {
@@ -23,6 +28,7 @@ export interface Class {
   numberOfClasses: number;
   price: number;
   description?: string;
+  image?: string;
 }
 
 export interface Trainer {
@@ -31,6 +37,8 @@ export interface Trainer {
   experience: string;
   image: string;
   bio?: string;
+  specialization?: string;
+  certification?: string;
 }
 
 export interface User {

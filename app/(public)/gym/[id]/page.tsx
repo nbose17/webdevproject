@@ -9,7 +9,7 @@ import PlanCard from '@/components/public/PlanCard';
 import TrainerCard from '@/components/public/TrainerCard';
 import NewsletterSection from '@/components/public/NewsletterSection';
 import Carousel from '@/components/shared/Carousel';
-import { mockClasses, mockPlans, mockTrainers, mockCMSItems } from '@/lib/constants';
+import { mockClasses, mockPlans, mockTrainers, mockCMSItems, mockGyms } from '@/lib/constants';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -17,7 +17,35 @@ interface PageProps {
 
 export default function GymPage({ params }: PageProps) {
   const { id } = use(params);
+
+  // Find the specific gym by ID
+  const gym = mockGyms.find((g) => g.id === id);
+
+  // Get CMS content
   const featureBanner = mockCMSItems.find((item) => item.name === 'Feature Banner');
+  const featureHeading = mockCMSItems.find((item) => item.name === 'Feature Heading');
+  const featureDescription = mockCMSItems.find((item) => item.name === 'Feature Description');
+  const classListHeading = mockCMSItems.find((item) => item.name === 'Class List Heading');
+  const classListDescription = mockCMSItems.find((item) => item.name === 'Class List Description');
+  const planListHeading = mockCMSItems.find((item) => item.name === 'Plan List Heading');
+  const planListDescription = mockCMSItems.find((item) => item.name === 'Plan List Description');
+  const trainerListHeading = mockCMSItems.find((item) => item.name === 'Trainer List Heading');
+  const trainerListDescription = mockCMSItems.find((item) => item.name === 'Trainer List Description');
+
+  // If gym not found, show default content
+  if (!gym) {
+    return (
+      <div className="public-page">
+        <Header />
+        <main className="public-main">
+          <div className="container">
+            <h1>Gym not found</h1>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="public-page">
@@ -26,21 +54,29 @@ export default function GymPage({ params }: PageProps) {
       <main className="public-main">
         <div className="container">
           <section className="gym-detail-section">
-            <h2 className="gym-detail-heading">Feature Heading</h2>
+            <h2 className="gym-detail-heading">{featureHeading?.content || 'Why Choose Us'}</h2>
             <p className="gym-detail-sub-heading">
-              Feature Content Feature Content Feature Content Feature Content Feature Content Feature Content
+              {featureDescription?.content || 'Discover what makes us special'}
             </p>
             {featureBanner && (
               <div className="gym-detail-feature-banner">
                 <p>{featureBanner.content}</p>
               </div>
             )}
+            {/* Display gym-specific information */}
+            <div className="gym-info">
+              <h3>{gym.name}</h3>
+              <p>{gym.description}</p>
+              {gym.address && <p>📍 {gym.address}</p>}
+              {gym.phone && <p>📞 {gym.phone}</p>}
+              {gym.email && <p>✉️ {gym.email}</p>}
+            </div>
           </section>
 
           <section className="gym-detail-section">
-            <h2 className="gym-detail-heading">Class List Heading</h2>
+            <h2 className="gym-detail-heading">{classListHeading?.content || 'Our Classes'}</h2>
             <p className="gym-detail-sub-heading">
-              Class List Sub Heading Class List Sub Heading Class List Sub Heading Class List Sub Heading
+              {classListDescription?.content || 'Explore our variety of classes'}
             </p>
             <Carousel itemsPerView={3}>
               {mockClasses.map((classItem) => (
@@ -50,9 +86,9 @@ export default function GymPage({ params }: PageProps) {
           </section>
 
           <section className="gym-detail-section">
-            <h2 className="gym-detail-heading">Plan List Heading</h2>
+            <h2 className="gym-detail-heading">{planListHeading?.content || 'Membership Plans'}</h2>
             <p className="gym-detail-sub-heading">
-              Plan List Sub Heading Plan List Sub Heading Plan List Sub Heading Plan List Sub Heading
+              {planListDescription?.content || 'Choose the perfect plan for you'}
             </p>
             <Carousel itemsPerView={3}>
               {mockPlans.map((plan) => (
@@ -62,9 +98,9 @@ export default function GymPage({ params }: PageProps) {
           </section>
 
           <section className="gym-detail-section">
-            <h2 className="gym-detail-heading">Trainer List Heading</h2>
+            <h2 className="gym-detail-heading">{trainerListHeading?.content || 'Meet Our Trainers'}</h2>
             <p className="gym-detail-sub-heading">
-              Trainer List Sub Heading Trainer List Sub Heading Trainer List Sub Heading
+              {trainerListDescription?.content || 'Our expert team is here to help'}
             </p>
             <Carousel itemsPerView={3}>
               {mockTrainers.map((trainer) => (
@@ -80,4 +116,5 @@ export default function GymPage({ params }: PageProps) {
     </div>
   );
 }
+
 
