@@ -14,23 +14,13 @@ export default function TrainerCard({ trainer }: TrainerCardProps) {
         <Image
           src={trainer.image}
           alt={trainer.name}
-          width={200}
-          height={200}
+          width={400}
+          height={400}
           className="trainer-card-image"
         />
-      </div>
-      <div className="trainer-card-info">
-        <h3 className="trainer-card-name">{trainer.name}</h3>
-        <p className="trainer-card-experience">{trainer.experience}</p>
-        {trainer.specialization && (
-          <p className="trainer-card-specialization">{trainer.specialization}</p>
-        )}
-        {trainer.certification && (
-          <p className="trainer-card-certification">{trainer.certification}</p>
-        )}
-        {trainer.bio && (
-          <p className="trainer-card-bio">{trainer.bio}</p>
-        )}
+        <div className="trainer-card-overlay">
+          <h3 className="trainer-card-name">{trainer.name}</h3>
+        </div>
       </div>
     </div>
   );

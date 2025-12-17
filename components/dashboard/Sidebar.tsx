@@ -9,7 +9,6 @@ import {
   FaCalendarAlt,
   FaPalette,
   FaBullhorn,
-  FaCog,
   FaSignOutAlt
 } from 'react-icons/fa';
 import { useAuth } from '@/hooks/useAuth';
@@ -21,7 +20,6 @@ const navItems = [
   { href: '/dashboard/trainers', label: 'Trainers', icon: FaUserTie },
   { href: '/dashboard/classes', label: 'Classes', icon: FaCalendarAlt },
   { href: '/dashboard/advertisement', label: 'Advertisement', icon: FaBullhorn },
-  { href: '/dashboard/settings', label: 'Settings', icon: FaCog },
 ];
 
 export default function Sidebar() {

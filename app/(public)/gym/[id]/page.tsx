@@ -53,30 +53,24 @@ export default function GymPage({ params }: PageProps) {
       <HeroSection />
       <main className="public-main">
         <div className="container">
+          {/* Feature Section */}
           <section className="gym-detail-section">
-            <h2 className="gym-detail-heading">{featureHeading?.content || 'Why Choose Us'}</h2>
+            <h2 className="gym-detail-heading">{featureHeading?.content || 'Feature Heading'}</h2>
             <p className="gym-detail-sub-heading">
-              {featureDescription?.content || 'Discover what makes us special'}
+              {featureDescription?.content || 'Feature Content Feature Content Feature Content Feature Content Feature Content Feature Content'}
             </p>
             {featureBanner && (
               <div className="gym-detail-feature-banner">
                 <p>{featureBanner.content}</p>
               </div>
             )}
-            {/* Display gym-specific information */}
-            <div className="gym-info">
-              <h3>{gym.name}</h3>
-              <p>{gym.description}</p>
-              {gym.address && <p>📍 {gym.address}</p>}
-              {gym.phone && <p>📞 {gym.phone}</p>}
-              {gym.email && <p>✉️ {gym.email}</p>}
-            </div>
           </section>
 
-          <section className="gym-detail-section">
-            <h2 className="gym-detail-heading">{classListHeading?.content || 'Our Classes'}</h2>
+          {/* Classes Section */}
+          <section id="classes-section" className="gym-detail-section">
+            <h2 className="gym-detail-heading">{classListHeading?.content || 'Class List Heading'}</h2>
             <p className="gym-detail-sub-heading">
-              {classListDescription?.content || 'Explore our variety of classes'}
+              {classListDescription?.content || 'Class List Sub Heading Class List Sub Heading Class List Sub Heading Class List Sub Heading'}
             </p>
             <Carousel itemsPerView={3}>
               {mockClasses.map((classItem) => (
@@ -85,10 +79,11 @@ export default function GymPage({ params }: PageProps) {
             </Carousel>
           </section>
 
-          <section className="gym-detail-section">
-            <h2 className="gym-detail-heading">{planListHeading?.content || 'Membership Plans'}</h2>
+          {/* Plans Section */}
+          <section id="plans-section" className="gym-detail-section">
+            <h2 className="gym-detail-heading">{planListHeading?.content || 'Plan List Heading'}</h2>
             <p className="gym-detail-sub-heading">
-              {planListDescription?.content || 'Choose the perfect plan for you'}
+              {planListDescription?.content || 'Plan List Sub Heading Plan List Sub Heading Plan List Sub Heading Plan List Sub Heading'}
             </p>
             <Carousel itemsPerView={3}>
               {mockPlans.map((plan) => (
@@ -97,10 +92,11 @@ export default function GymPage({ params }: PageProps) {
             </Carousel>
           </section>
 
+          {/* Trainers Section */}
           <section className="gym-detail-section">
-            <h2 className="gym-detail-heading">{trainerListHeading?.content || 'Meet Our Trainers'}</h2>
+            <h2 className="gym-detail-heading">{trainerListHeading?.content || 'Trainer List Heading'}</h2>
             <p className="gym-detail-sub-heading">
-              {trainerListDescription?.content || 'Our expert team is here to help'}
+              {trainerListDescription?.content || 'Trainer List Sub Heading Trainer List Sub Heading Trainer List Sub Heading'}
             </p>
             <Carousel itemsPerView={3}>
               {mockTrainers.map((trainer) => (
@@ -109,6 +105,7 @@ export default function GymPage({ params }: PageProps) {
             </Carousel>
           </section>
 
+          {/* Newsletter Section */}
           <NewsletterSection />
         </div>
       </main>

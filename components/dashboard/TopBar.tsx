@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
-import { FaUser, FaCog, FaSignOutAlt, FaChevronDown } from 'react-icons/fa';
+import { FaUser, FaSignOutAlt, FaChevronDown } from 'react-icons/fa';
 
 export default function TopBar() {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -39,10 +39,7 @@ export default function TopBar() {
     setIsPopoverOpen(false);
   };
 
-  const handleProfileSettings = () => {
-    router.push('/dashboard/settings');
-    setIsPopoverOpen(false);
-  };
+
 
   const userInitials = user?.email
     ? user.email.charAt(0).toUpperCase()
@@ -80,13 +77,6 @@ export default function TopBar() {
                 </div>
               </div>
               <div className="dashboard-topbar-popover-divider"></div>
-              <button
-                onClick={handleProfileSettings}
-                className="dashboard-topbar-popover-item"
-              >
-                <FaCog className="dashboard-topbar-popover-icon" />
-                <span>Profile Settings</span>
-              </button>
               <button
                 onClick={handleLogout}
                 className="dashboard-topbar-popover-item"

@@ -26,15 +26,24 @@
   --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  --font-size-xs: 0.75rem;    /* 12px */
-  --font-size-sm: 0.875rem;   /* 14px */
-  --font-size-base: 1rem;     /* 16px */
-  --font-size-lg: 1.125rem;   /* 18px */
-  --font-size-xl: 1.25rem;    /* 20px */
-  --font-size-2xl: 1.5rem;    /* 24px */
-  --font-size-3xl: 1.875rem;  /* 30px */
-  --font-size-4xl: 2.25rem;   /* 36px */
-  --font-size-5xl: 3rem;      /* 48px */
+  --font-size-xs: 0.75rem;
+  /* 12px */
+  --font-size-sm: 0.875rem;
+  /* 14px */
+  --font-size-base: 1rem;
+  /* 16px */
+  --font-size-lg: 1.125rem;
+  /* 18px */
+  --font-size-xl: 1.25rem;
+  /* 20px */
+  --font-size-2xl: 1.5rem;
+  /* 24px */
+  --font-size-3xl: 1.875rem;
+  /* 30px */
+  --font-size-4xl: 2.25rem;
+  /* 36px */
+  --font-size-5xl: 3rem;
+  /* 48px */
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
@@ -44,14 +53,22 @@
   --line-height-relaxed: 1.75;
 
   /* Spacing */
-  --spacing-xs: 0.25rem;   /* 4px */
-  --spacing-sm: 0.5rem;    /* 8px */
-  --spacing-md: 1rem;      /* 16px */
-  --spacing-lg: 1.5rem;    /* 24px */
-  --spacing-xl: 2rem;      /* 32px */
-  --spacing-2xl: 3rem;     /* 48px */
-  --spacing-3xl: 4rem;     /* 64px */
-  --spacing-4xl: 6rem;     /* 96px */
+  --spacing-xs: 0.25rem;
+  /* 4px */
+  --spacing-sm: 0.5rem;
+  /* 8px */
+  --spacing-md: 1rem;
+  /* 16px */
+  --spacing-lg: 1.5rem;
+  /* 24px */
+  --spacing-xl: 2rem;
+  /* 32px */
+  --spacing-2xl: 3rem;
+  /* 48px */
+  --spacing-3xl: 4rem;
+  /* 64px */
+  --spacing-4xl: 6rem;
+  /* 96px */
 
   /* Border Radius */
   --radius-sm: 4px;
@@ -318,6 +335,7 @@ img {
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -464,7 +482,11 @@ img {
   flex: 1;
   background: linear-gradient(180deg, var(--color-white) 0%, var(--color-bg-secondary) 5%, var(--color-bg-secondary) 100%);
   padding: var(--spacing-3xl) var(--spacing-xl);
-  margin-top: 80px; /* Add margin to account for fixed header */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+  /* Account for header height */
 }
 
 @media (max-width: 768px) {
@@ -515,6 +537,7 @@ img {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -618,7 +641,7 @@ img {
   pointer-events: none;
 }
 
-.public-header-search-container > * {
+.public-header-search-container>* {
   pointer-events: all;
 }
 
@@ -839,9 +862,12 @@ img {
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.5;
   }
+
   50% {
     opacity: 0.8;
   }
@@ -940,8 +966,8 @@ img {
 /* Hero Section Component */
 .hero-section {
   position: relative;
-  min-height: 500px;
-  background-image: url('/images/gym-hero-bg.jpg');
+  min-height: 600px;
+  background-image: url('/images/gym_iron_paradise_1765618574429.png');
   background-size: cover;
   background-position: center;
   background-color: var(--color-bg-secondary);
@@ -1003,7 +1029,7 @@ img {
   display: flex;
   gap: var(--spacing-md);
   justify-content: center;
-  margin-bottom: var(--spacing-2xl);
+  flex-wrap: wrap;
 }
 
 .hero-section-logo {
@@ -1108,11 +1134,16 @@ img {
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-md);
+  transition: transform var(--transition-base);
+}
+
+.trainer-card:hover {
+  transform: translateY(-4px);
 }
 
 .trainer-card-image-container {
   width: 100%;
-  height: 250px;
+  height: 400px;
   position: relative;
   overflow: hidden;
   background-color: var(--color-bg-secondary);
@@ -1124,17 +1155,22 @@ img {
   object-fit: cover;
 }
 
-.trainer-card-info {
-  background-color: var(--color-bg-dark);
-  padding: var(--spacing-lg);
+.trainer-card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(45, 45, 45, 0.95) 0%, rgba(45, 45, 45, 0.7) 50%, transparent 100%);
+  padding: var(--spacing-2xl) var(--spacing-lg);
   text-align: center;
 }
 
 .trainer-card-name {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
   color: var(--color-white);
   margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* ============================================
@@ -1163,7 +1199,7 @@ img {
   .dashboard-content-wrapper {
     margin-left: 0;
   }
-  
+
   .dashboard-main {
     padding: var(--spacing-lg);
   }
@@ -1259,6 +1295,7 @@ img {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1621,6 +1658,7 @@ img {
 }
 
 @media (max-width: 768px) {
+
   .dashboard-form-image-preview-container,
   .dashboard-form-image-placeholder {
     max-width: 100%;
@@ -1793,13 +1831,13 @@ img {
     margin-left: 0;
     margin-top: var(--spacing-sm);
   }
-  
+
   .dashboard-page-title {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--spacing-sm);
   }
-  
+
   .dashboard-page-title-icon {
     width: 40px;
     height: 40px;
@@ -1960,12 +1998,17 @@ img {
   margin-bottom: var(--spacing-4xl);
 }
 
+.gym-detail-section:first-of-type {
+  margin-top: var(--spacing-xl);
+}
+
 .gym-detail-heading {
   font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-bold);
   font-style: italic;
   color: var(--color-text-primary);
   margin-bottom: var(--spacing-md);
+  text-align: center;
 }
 
 .gym-detail-sub-heading {
@@ -1973,6 +2016,7 @@ img {
   color: var(--color-text-secondary);
   margin-bottom: var(--spacing-xl);
   line-height: var(--line-height-relaxed);
+  text-align: center;
 }
 
 .gym-detail-feature-banner {
@@ -2357,14 +2401,15 @@ img {
 
 /* Newsletter Section Component */
 .newsletter-section {
-  background-color: var(--color-bg-dark);
-  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, #5a5a5a 0%, #3d3d3d 100%);
+  border-radius: var(--radius-lg);
   padding: var(--spacing-4xl);
   margin: var(--spacing-4xl) 0;
+  box-shadow: var(--shadow-lg);
 }
 
 .newsletter-container {
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
   text-align: center;
 }
@@ -2374,23 +2419,58 @@ img {
   font-weight: var(--font-weight-bold);
   color: var(--color-white);
   margin-bottom: var(--spacing-md);
+  letter-spacing: 0.5px;
 }
 
 .newsletter-sub-heading {
-  font-size: var(--font-size-base);
-  color: var(--color-white);
-  opacity: 0.9;
+  font-size: var(--font-size-lg);
+  color: rgba(255, 255, 255, 0.85);
   margin-bottom: var(--spacing-2xl);
+  font-weight: var(--font-weight-normal);
 }
 
 .newsletter-form {
   display: flex;
   gap: var(--spacing-md);
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .newsletter-input {
   flex: 1;
+  max-width: 400px;
+}
+
+.newsletter-input input {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: none;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+}
+
+.newsletter-input input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.newsletter-form button {
+  background-color: #1a1a1a;
+  color: var(--color-white);
+  padding: var(--spacing-md) var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+  border: none;
+  transition: all var(--transition-base);
+}
+
+.newsletter-form button:hover {
+  background-color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 768px) {
@@ -2410,4 +2490,3 @@ img {
     width: 100%;
   }
 }
-

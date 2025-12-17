@@ -3,6 +3,13 @@
 import Button from '@/components/shared/Button';
 
 export default function HeroSection() {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <section className="hero-section">
       <div className="hero-section-overlay" />
@@ -15,15 +22,12 @@ export default function HeroSection() {
           Train in the fitness gym and explore all benefits
         </p>
         <div className="hero-section-actions">
-          <Button variant="secondary" size="lg">
+          <Button variant="secondary" size="lg" onClick={() => scrollToSection('classes-section')}>
             See All Classes
           </Button>
-          <Button variant="primary" size="lg">
+          <Button variant="primary" size="lg" onClick={() => scrollToSection('plans-section')}>
             View Plans
           </Button>
-        </div>
-        <div className="hero-section-logo">
-          <div className="hero-section-logo-circle">FITNESS</div>
         </div>
       </div>
     </section>
