@@ -110,7 +110,7 @@ export default function PlansPage() {
           <span className="dashboard-page-title-icon">
             <CreditCardOutlined />
           </span>
-          Plans (Monthly / Yearly)
+          Plans
         </h1>
         <Button
           type="primary"
