@@ -3,28 +3,29 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import Button from '@/components/shared/Button';
+import { Input, Button } from 'antd';
+import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
 import { useAuth } from '@/hooks/useAuth';
-import { FaSearch, FaPlus } from 'react-icons/fa';
+
+const { Search } = Input;
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
   const { isAuthenticated } = useAuth();
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
+  const handleSearch = (value: string) => {
+    if (value.trim()) {
       // In a real app, this would navigate to a search results page
       // For now, we'll just log it or you can implement search functionality
-      console.log('Searching for:', searchQuery);
-      // router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+      console.log('Searching for:', value);
+      // router.push(`/search?q=${encodeURIComponent(value)}`);
     }
   };
 
   const handlePostAdvertisement = () => {
     if (isAuthenticated) {
-      router.push('/dashboard/publish');
+      router.push('/dashboard/advertisement');
     } else {
       router.push('/login');
     }
@@ -37,30 +38,35 @@ export default function Header() {
           <p className="public-header-branding">FitConnect Ads</p>
         </div>
         <div className="public-header-search-container">
-          <form onSubmit={handleSearch} className="public-header-search-form">
-            <input
-              type="text"
-              placeholder="Search gyms, locations..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="public-header-search-input"
-            />
-            <button type="submit" className="public-header-search-button">
-              <FaSearch />
-            </button>
-          </form>
+          <Search
+            placeholder="Search gyms, locations..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onSearch={handleSearch}
+            enterButton={
+              <Button
+                type="primary"
+                icon={<SearchOutlined />}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              />
+            }
+            style={{ width: '100%' }}
+          />
         </div>
         <div className="public-header-actions">
           <Link href="/login" className="public-header-login-link">
             Login
           </Link>
-          <Button 
-            variant="primary" 
-            size="md" 
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
             onClick={handlePostAdvertisement}
             className="public-header-post-button"
           >
-            <FaPlus style={{ marginRight: '6px' }} />
             List Your Gym
           </Button>
         </div>
@@ -68,5 +74,6 @@ export default function Header() {
     </header>
   );
 }
+
 
 

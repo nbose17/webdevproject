@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { Modal, Form, Input, Button, Space } from 'antd';
 import { CMSItem } from '@/lib/types';
-import Input from '@/components/shared/Input';
-import Button from '@/components/shared/Button';
-import Modal from '@/components/shared/Modal';
+
+const { TextArea } = Input;
 
 interface CMSFormProps {
   isOpen: boolean;
@@ -19,48 +19,77 @@ export default function CMSForm({
   onSubmit,
   item,
 }: CMSFormProps) {
-  const [content, setContent] = useState('');
+  const [form] = Form.useForm();
 
   useEffect(() => {
-    if (item) {
-      setContent(item.content);
+    if (isOpen && item) {
+      form.setFieldsValue({
+        content: item.content,
+      });
     } else {
-      setContent('');
+      form.resetFields();
     }
-  }, [item, isOpen]);
+  }, [item, isOpen, form]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (item) {
-      onSubmit({ ...item, content });
+  const handleSubmit = async () => {
+    try {
+      const values = await form.validateFields();
+      if (item) {
+        onSubmit({ ...item, content: values.content });
+      }
+      form.resetFields();
+      onClose();
+    } catch (error) {
+      // Validation failed
     }
+  };
+
+  const handleCancel = () => {
+    form.resetFields();
     onClose();
   };
 
+  const isMultiline = item?.type === 'text' || item?.type === 'banner';
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={`Edit ${item?.name || 'CMS Item'}`}>
-      <form onSubmit={handleSubmit} className="dashboard-form">
-        <Input
+    <Modal
+      title={`Edit ${item?.name || 'CMS Item'}`}
+      open={isOpen}
+      onCancel={handleCancel}
+      footer={null}
+      width={600}
+    >
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={handleSubmit}
+        autoComplete="off"
+      >
+        <Form.Item
           label="Content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          required
-          multiline={item?.type === 'text' || item?.type === 'banner'}
-        />
-        <div className="dashboard-form-actions">
-          <Button type="button" variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button type="submit" variant="primary">
-            Update
-          </Button>
-        </div>
-      </form>
+          name="content"
+          rules={[
+            { required: true, message: 'Please enter content' },
+          ]}
+        >
+          {isMultiline ? (
+            <TextArea rows={6} placeholder="Enter content" />
+          ) : (
+            <Input placeholder="Enter content" />
+          )}
+        </Form.Item>
+
+        <Form.Item style={{ marginBottom: 0, marginTop: '24px' }}>
+          <Space style={{ width: '100%', justifyContent: 'flex-end' }}>
+            <Button onClick={handleCancel}>
+              Cancel
+            </Button>
+            <Button type="primary" htmlType="submit">
+              Update
+            </Button>
+          </Space>
+        </Form.Item>
+      </Form>
     </Modal>
   );
 }
-
-
-
-
-

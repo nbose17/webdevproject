@@ -14,7 +14,7 @@ export default function AdvertisementPage() {
             </span>
             Advertisement
           </h1>
-          <p className="dashboard-page-subtitle">Share your gym's QR code and manage your subscription</p>
+          <p className="dashboard-page-subtitle">Share your gym's QR code</p>
         </div>
       </div>
       <QRCodeDisplay />

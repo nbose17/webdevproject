@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import '../styles/style.css'
 import { AuthProvider } from '@/contexts/AuthContext'
+import AntdProvider from '@/components/providers/AntdProvider'
 
 export const metadata: Metadata = {
   title: 'FitConnect Ads',
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning>
-        <AuthProvider>{children}</AuthProvider>
+        <AntdProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </AntdProvider>
       </body>
     </html>
   )

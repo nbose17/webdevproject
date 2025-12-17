@@ -1,10 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { Modal, Form, Input, InputNumber, Button, Space } from 'antd';
 import { Class } from '@/lib/types';
-import Input from '@/components/shared/Input';
-import Button from '@/components/shared/Button';
-import Modal from '@/components/shared/Modal';
 
 interface ClassFormProps {
   isOpen: boolean;
@@ -19,78 +17,118 @@ export default function ClassForm({
   onSubmit,
   classItem,
 }: ClassFormProps) {
-  const [name, setName] = useState('');
-  const [duration, setDuration] = useState('');
-  const [numberOfClasses, setNumberOfClasses] = useState('');
-  const [price, setPrice] = useState('');
+  const [form] = Form.useForm();
 
   useEffect(() => {
-    if (classItem) {
-      setName(classItem.name);
-      setDuration(classItem.duration);
-      setNumberOfClasses(classItem.numberOfClasses.toString());
-      setPrice(classItem.price.toString());
-    } else {
-      setName('');
-      setDuration('');
-      setNumberOfClasses('');
-      setPrice('');
+    if (isOpen) {
+      if (classItem) {
+        form.setFieldsValue({
+          name: classItem.name,
+          duration: classItem.duration,
+          numberOfClasses: classItem.numberOfClasses,
+          price: classItem.price,
+        });
+      } else {
+        form.resetFields();
+      }
     }
-  }, [classItem, isOpen]);
+  }, [classItem, isOpen, form]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit({
-      name,
-      duration,
-      numberOfClasses: parseInt(numberOfClasses),
-      price: parseFloat(price),
-    });
+  const handleSubmit = async () => {
+    try {
+      const values = await form.validateFields();
+      onSubmit(values);
+      form.resetFields();
+      onClose();
+    } catch (error) {
+      // Validation failed
+    }
+  };
+
+  const handleCancel = () => {
+    form.resetFields();
     onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={classItem ? 'Edit Class' : 'Add Class'}>
-      <form onSubmit={handleSubmit} className="dashboard-form">
-        <Input
+    <Modal
+      title={classItem ? 'Edit Class' : 'Add Class'}
+      open={isOpen}
+      onCancel={handleCancel}
+      footer={null}
+      width={600}
+    >
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={handleSubmit}
+        autoComplete="off"
+      >
+        <Form.Item
           label="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-        <Input
+          name="name"
+          rules={[
+            { required: true, message: 'Please enter class name' },
+            { min: 2, message: 'Class name must be at least 2 characters' },
+          ]}
+        >
+          <Input placeholder="e.g., Yoga Class" />
+        </Form.Item>
+
+        <Form.Item
           label="Duration"
-          value={duration}
-          onChange={(e) => setDuration(e.target.value)}
-          required
-          placeholder="e.g., 1 Hour, 45 Minutes"
-        />
-        <Input
-          label="No of Classes"
-          type="number"
-          value={numberOfClasses}
-          onChange={(e) => setNumberOfClasses(e.target.value)}
-          required
-          min="1"
-        />
-        <Input
+          name="duration"
+          rules={[
+            { required: true, message: 'Please enter class duration' },
+          ]}
+        >
+          <Input placeholder="e.g., 1 Hour, 45 Minutes" />
+        </Form.Item>
+
+        <Form.Item
+          label="Number of Classes"
+          name="numberOfClasses"
+          rules={[
+            { required: true, message: 'Please enter number of classes' },
+            { type: 'number', min: 1, message: 'Must be at least 1' },
+          ]}
+        >
+          <InputNumber
+            placeholder="1"
+            style={{ width: '100%' }}
+            min={1}
+          />
+        </Form.Item>
+
+        <Form.Item
           label="Price ($)"
-          type="number"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          required
-          min="0"
-          step="0.01"
-        />
-        <div className="dashboard-form-actions">
-          <Button type="button" variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button type="submit" variant="primary">
-            {classItem ? 'Update' : 'Add'}
-          </Button>
-        </div>
-      </form>
+          name="price"
+          rules={[
+            { required: true, message: 'Please enter class price' },
+            { type: 'number', min: 0, message: 'Price must be positive' },
+          ]}
+        >
+          <InputNumber
+            placeholder="0.00"
+            style={{ width: '100%' }}
+            min={0}
+            step={0.01}
+            precision={2}
+            prefix="$"
+          />
+        </Form.Item>
+
+        <Form.Item style={{ marginBottom: 0, marginTop: '24px' }}>
+          <Space style={{ width: '100%', justifyContent: 'flex-end' }}>
+            <Button onClick={handleCancel}>
+              Cancel
+            </Button>
+            <Button type="primary" htmlType="submit">
+              {classItem ? 'Update' : 'Add'}
+            </Button>
+          </Space>
+        </Form.Item>
+      </Form>
     </Modal>
   );
 }

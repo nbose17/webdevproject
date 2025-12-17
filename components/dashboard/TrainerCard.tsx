@@ -1,8 +1,8 @@
 'use client';
 
+import { Card, Button, Space, Avatar } from 'antd';
+import { EditOutlined, DeleteOutlined, UserOutlined } from '@ant-design/icons';
 import { Trainer } from '@/lib/types';
-import Button from '@/components/shared/Button';
-import { FaEdit, FaTrash } from 'react-icons/fa';
 
 interface TrainerCardProps {
   trainer: Trainer;
@@ -12,52 +12,62 @@ interface TrainerCardProps {
 
 export default function TrainerCard({ trainer, onEdit, onDelete }: TrainerCardProps) {
   return (
-    <div className="dashboard-trainer-card">
-      <div className="dashboard-trainer-card-image-container">
-        {trainer.image ? (
+    <Card
+      hoverable
+      cover={
+        trainer.image ? (
           <img
             src={trainer.image}
             alt={trainer.name}
-            className="dashboard-trainer-card-image"
+            style={{
+              height: '200px',
+              objectFit: 'cover'
+            }}
           />
         ) : (
-          <div className="dashboard-trainer-card-placeholder">
-            <span>No Image</span>
+          <div style={{
+            height: '200px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: '#f0f0f0'
+          }}>
+            <Avatar size={80} icon={<UserOutlined />} />
           </div>
-        )}
-      </div>
-      <div className="dashboard-trainer-card-content">
-        <h3 className="dashboard-trainer-card-name">{trainer.name}</h3>
-        <p className="dashboard-trainer-card-experience">{trainer.experience}</p>
-        {trainer.bio && (
-          <p className="dashboard-trainer-card-bio">{trainer.bio}</p>
-        )}
-        <div className="dashboard-trainer-card-actions">
-          {onEdit && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => onEdit(trainer)}
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--spacing-sm)' }}
-              title="Edit"
-            >
-              <FaEdit />
-            </Button>
-          )}
-          {onDelete && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => onDelete(trainer)}
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--spacing-sm)' }}
-              title="Delete"
-            >
-              <FaTrash />
-            </Button>
-          )}
-        </div>
-      </div>
-    </div>
+        )
+      }
+      actions={[
+        onEdit && (
+          <Button
+            type="text"
+            icon={<EditOutlined />}
+            onClick={() => onEdit(trainer)}
+          >
+            Edit
+          </Button>
+        ),
+        onDelete && (
+          <Button
+            type="text"
+            danger
+            icon={<DeleteOutlined />}
+            onClick={() => onDelete(trainer)}
+          >
+            Delete
+          </Button>
+        ),
+      ].filter(Boolean)}
+    >
+      <Card.Meta
+        title={trainer.name}
+        description={
+          <Space direction="vertical" size="small" style={{ width: '100%' }}>
+            <div>{trainer.experience}</div>
+            {trainer.bio && <div style={{ color: '#8c8c8c' }}>{trainer.bio}</div>}
+          </Space>
+        }
+      />
+    </Card>
   );
 }
 

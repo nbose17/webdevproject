@@ -1,10 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { Modal, Form, Input, InputNumber, Button, Space } from 'antd';
 import { Plan } from '@/lib/types';
-import Input from '@/components/shared/Input';
-import Button from '@/components/shared/Button';
-import Modal from '@/components/shared/Modal';
 
 interface PlanFormProps {
   isOpen: boolean;
@@ -19,66 +17,102 @@ export default function PlanForm({
   onSubmit,
   plan,
 }: PlanFormProps) {
-  const [name, setName] = useState('');
-  const [duration, setDuration] = useState('');
-  const [price, setPrice] = useState('');
+  const [form] = Form.useForm();
 
   useEffect(() => {
-    if (plan) {
-      setName(plan.name);
-      setDuration(plan.duration);
-      setPrice(plan.price.toString());
-    } else {
-      setName('');
-      setDuration('');
-      setPrice('');
+    if (isOpen) {
+      if (plan) {
+        form.setFieldsValue({
+          name: plan.name,
+          duration: plan.duration,
+          price: plan.price,
+        });
+      } else {
+        form.resetFields();
+      }
     }
-  }, [plan, isOpen]);
+  }, [plan, isOpen, form]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit({
-      name,
-      duration,
-      price: parseFloat(price),
-    });
+  const handleSubmit = async () => {
+    try {
+      const values = await form.validateFields();
+      onSubmit(values);
+      form.resetFields();
+      onClose();
+    } catch (error) {
+      // Validation failed
+    }
+  };
+
+  const handleCancel = () => {
+    form.resetFields();
     onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={plan ? 'Edit Plan' : 'Add Plan'}>
-      <form onSubmit={handleSubmit} className="dashboard-form">
-        <Input
+    <Modal
+      title={plan ? 'Edit Plan' : 'Add Plan'}
+      open={isOpen}
+      onCancel={handleCancel}
+      footer={null}
+      width={600}
+    >
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={handleSubmit}
+        autoComplete="off"
+      >
+        <Form.Item
           label="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-        <Input
+          name="name"
+          rules={[
+            { required: true, message: 'Please enter plan name' },
+            { min: 2, message: 'Plan name must be at least 2 characters' },
+          ]}
+        >
+          <Input placeholder="e.g., Premium Plan" />
+        </Form.Item>
+
+        <Form.Item
           label="Duration"
-          value={duration}
-          onChange={(e) => setDuration(e.target.value)}
-          required
-          placeholder="e.g., 3 Months, 1 Year"
-        />
-        <Input
+          name="duration"
+          rules={[
+            { required: true, message: 'Please enter plan duration' },
+          ]}
+        >
+          <Input placeholder="e.g., 3 Months, 1 Year" />
+        </Form.Item>
+
+        <Form.Item
           label="Price ($)"
-          type="number"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          required
-          min="0"
-          step="0.01"
-        />
-        <div className="dashboard-form-actions">
-          <Button type="button" variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button type="submit" variant="primary">
-            {plan ? 'Update' : 'Add'}
-          </Button>
-        </div>
-      </form>
+          name="price"
+          rules={[
+            { required: true, message: 'Please enter plan price' },
+            { type: 'number', min: 0, message: 'Price must be positive' },
+          ]}
+        >
+          <InputNumber
+            placeholder="0.00"
+            style={{ width: '100%' }}
+            min={0}
+            step={0.01}
+            precision={2}
+            prefix="$"
+          />
+        </Form.Item>
+
+        <Form.Item style={{ marginBottom: 0, marginTop: '24px' }}>
+          <Space style={{ width: '100%', justifyContent: 'flex-end' }}>
+            <Button onClick={handleCancel}>
+              Cancel
+            </Button>
+            <Button type="primary" htmlType="submit">
+              {plan ? 'Update' : 'Add'}
+            </Button>
+          </Space>
+        </Form.Item>
+      </Form>
     </Modal>
   );
 }
