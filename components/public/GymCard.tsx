@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Gym } from '@/lib/types';
+import { getAssetPath } from '@/lib/utils';
 
 interface GymCardProps {
   gym: Gym;
@@ -13,7 +14,7 @@ export default function GymCard({ gym }: GymCardProps) {
     <Link href={`/gym/${gym.id}`} className="gym-card">
       <div className="gym-card-image-container">
         <Image
-          src={gym.image}
+          src={getAssetPath(gym.image)}
           alt={gym.name}
           width={300}
           height={200}

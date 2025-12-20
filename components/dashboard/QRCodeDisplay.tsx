@@ -6,18 +6,17 @@ import { mockGyms } from '@/lib/constants';
 import { useAuth } from '@/hooks/useAuth';
 import Button from '@/components/shared/Button';
 import { FaWhatsapp, FaTelegram, FaDownload } from 'react-icons/fa';
+import { getFullUrl } from '@/lib/utils';
 
 export default function QRCodeDisplay() {
   const { user } = useAuth();
-  // In a real app, this would come from the user's gym data
-  // For now, using gym ID '1' as default (first gym in mock data)
   const gymId = '1';
   const gym = mockGyms.find(g => g.id === gymId) || mockGyms[0];
   const [gymPageUrl, setGymPageUrl] = useState(`/gym/${gymId}`);
 
   useEffect(() => {
-    // Set the full URL only on client side to avoid hydration mismatch
-    setGymPageUrl(`${window.location.origin}/gym/${gymId}`);
+    // Set the full URL with base path
+    setGymPageUrl(getFullUrl(`/gym/${gymId}`));
   }, [gymId]);
 
   const handleDownloadQR = () => {

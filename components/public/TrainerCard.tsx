@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { Trainer } from '@/lib/types';
+import { getAssetPath } from '@/lib/utils';
 
 interface TrainerCardProps {
   trainer: Trainer;
@@ -12,7 +13,7 @@ export default function TrainerCard({ trainer }: TrainerCardProps) {
     <div className="trainer-card">
       <div className="trainer-card-image-container">
         <Image
-          src={trainer.image}
+          src={getAssetPath(trainer.image)}
           alt={trainer.name}
           width={400}
           height={400}

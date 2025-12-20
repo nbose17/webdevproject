@@ -3,6 +3,7 @@
 import { Card, Button, Space, Avatar } from 'antd';
 import { EditOutlined, DeleteOutlined, UserOutlined } from '@ant-design/icons';
 import { Trainer } from '@/lib/types';
+import { getAssetPath } from '@/lib/utils';
 
 interface TrainerCardProps {
   trainer: Trainer;
@@ -17,7 +18,7 @@ export default function TrainerCard({ trainer, onEdit, onDelete }: TrainerCardPr
       cover={
         trainer.image ? (
           <img
-            src={trainer.image}
+            src={getAssetPath(trainer.image)}
             alt={trainer.name}
             style={{
               height: '200px',

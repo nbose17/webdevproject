@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Gym, CMSItem } from '@/lib/types';
+import { getAssetPath } from '@/lib/utils';
 
 interface PublishPreviewProps {
   listingInfo: Partial<Gym>;
@@ -58,7 +59,7 @@ export default function PublishPreview({ listingInfo, cmsData }: PublishPreviewP
               {listingInfo.image ? (
                 <div className="gym-card-image-container">
                   <Image
-                    src={listingInfo.image}
+                    src={getAssetPath(listingInfo.image)}
                     alt={listingInfo.name || 'Gym'}
                     width={300}
                     height={200}
