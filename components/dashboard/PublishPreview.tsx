@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Gym, CMSItem } from '@/lib/types';
 import { getAssetPath } from '@/lib/utils';
 
@@ -58,12 +57,15 @@ export default function PublishPreview({ listingInfo, cmsData }: PublishPreviewP
             <div className="gym-card" style={{ maxWidth: '300px' }}>
               {listingInfo.image ? (
                 <div className="gym-card-image-container">
-                  <Image
+                  <img
                     src={getAssetPath(listingInfo.image)}
                     alt={listingInfo.name || 'Gym'}
-                    width={300}
-                    height={200}
                     className="gym-card-image"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }}
                   />
                 </div>
               ) : (

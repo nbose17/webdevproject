@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { Gym } from '@/lib/types';
 import { getAssetPath } from '@/lib/utils';
@@ -13,12 +12,15 @@ export default function GymCard({ gym }: GymCardProps) {
   return (
     <Link href={`/gym/${gym.id}`} className="gym-card">
       <div className="gym-card-image-container">
-        <Image
+        <img
           src={getAssetPath(gym.image)}
           alt={gym.name}
-          width={300}
-          height={200}
           className="gym-card-image"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover'
+          }}
         />
       </div>
       <div className="gym-card-content">
